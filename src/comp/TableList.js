@@ -42,11 +42,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export const TableList = () => {
   const [rows, setRows] = useState([])
+  const [filterData, setFilterData] = useState([])
   const [notify, setNotify] = useState({
     isOpen: false,
     message: "",
     type: "",
   });
+  const [search,setSearch] = useState("");
 
   // For Edit Model
   const [openEditModel, setOpenEditModel] = React.useState(false);
@@ -60,6 +62,7 @@ export const TableList = () => {
       if (data) {
         if (data.length > 0) {
           setRows(data)
+          setFilterData(data)
         }
       } else {
         let arr = new Array()
@@ -76,6 +79,11 @@ export const TableList = () => {
     newData.push(data)
     localStorage.setItem("data", JSON.stringify(newData))
     getData()
+    setNotify({
+      isOpen: true,
+      message: "Data submitted successfully.",
+      type: "success",
+    });
   }
 
   const deleteItem = (name) => {
@@ -83,6 +91,7 @@ export const TableList = () => {
     const filteredData = rows.filter((item) => item.name !== name);
     localStorage.setItem("data", JSON.stringify(filteredData))
     setRows(filteredData)
+    setFilterData(filteredData)
     setNotify({
       isOpen: true,
       message: `${name} is deleted successfully`,
@@ -105,6 +114,7 @@ export const TableList = () => {
     tempobj.date = data.date
     newState[index] = tempobj;
     setRows(newState);
+    setFilterData(newState)
       
     localStorage.setItem('data', JSON.stringify(newState))
   }
@@ -118,12 +128,30 @@ export const TableList = () => {
     getData()
   }, [])
 
+  useEffect(() => {
+    if(search.length > 0){
+
+      let filtered_users = filterData.filter(function (user) {
+        user =
+        user.name.toLowerCase() +
+        user.email.toLowerCase() +
+        user.gender.toLowerCase();
+        return user.indexOf(search) > -1;
+      });
+      setRows(filtered_users)
+    }
+    else{
+      getData()
+    }
+  }, [search])
+
+
   return (
     <TableContainer component={Paper} sx={{ width: 900, mt: 2, m: "auto" }} >
       <div className="searchmodal">
         
       <FormModel rows={rows} addData={addData} /> 
-      <SearchBar />
+      <SearchBar search={search} setSearch={setSearch} />
       </div>
       
       <Table sx={{ minWidth: 700, marginTop: 1 }} aria-label="customized table">

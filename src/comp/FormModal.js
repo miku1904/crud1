@@ -55,7 +55,7 @@ const FormModal = (props) => {
     type: "",
   });
   const classes = useStyles();
-  const { register, handleSubmit, control, errors, setError } = useForm();
+  const { register, handleSubmit, control, errors, setError } = useForm();                                                                                                                                                                                                                                                           
   // const [name,setName] = useState("")
   const onSubmit = (data) => {
     
