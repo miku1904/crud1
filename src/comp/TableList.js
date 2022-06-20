@@ -16,6 +16,7 @@ import IconButton from '@mui/material/IconButton';
 import Notification from './Notification';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import EditModal from './EditModal';
+import SearchBar from './SearchBar';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -104,7 +105,7 @@ export const TableList = () => {
     tempobj.date = data.date
     newState[index] = tempobj;
     setRows(newState);
-    
+      
     localStorage.setItem('data', JSON.stringify(newState))
   }
 
@@ -119,8 +120,12 @@ export const TableList = () => {
 
   return (
     <TableContainer component={Paper} sx={{ width: 900, mt: 2, m: "auto" }} >
-
-      <FormModel rows={rows} addData={addData} />
+      <div className="searchmodal">
+        
+      <FormModel rows={rows} addData={addData} /> 
+      <SearchBar />
+      </div>
+      
       <Table sx={{ minWidth: 700, marginTop: 1 }} aria-label="customized table">
         <TableHead>
           <TableRow>

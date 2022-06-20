@@ -1,10 +1,16 @@
 .App {
   text-align: center;
+  margin-top: 50px;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+.searchmodal{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px ;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -36,3 +42,4 @@
     transform: rotate(360deg);
   }
 }
+

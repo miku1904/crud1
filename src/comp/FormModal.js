@@ -89,7 +89,7 @@ const FormModal = (props) => {
 
   return (
     <>
-      <Button variant="contained" onClick={handleOpen}>Open modal</Button>
+      <Button variant="contained" onClick={handleOpen}>Add Employee</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -125,7 +125,10 @@ const FormModal = (props) => {
               className={classes.inputField}
               name="email"
               inputRef={register({
-                required: "E-mail Address is required.",
+                pattern: {
+        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+        message: "invalid email address"
+      }
               })}
               error={Boolean(errors.email)}
               helperText={errors.email?.message}
